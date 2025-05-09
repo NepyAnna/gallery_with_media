@@ -4,12 +4,16 @@ agent any
 stages {
     stage('Build') {
         steps {
-            sh 'docker build --no-cache -t gallery_with_media -f Dockerfile .'
+            // Intenta modificar los permisos del socket de Docker
+            sh 'chmod 666 /var/run/docker.sock || true'
+            sh 'docker build --no-cache -t gallery_with_media .'
+
         }
     }
     stage('Execute Command2') {
         steps {
-            sh 'docker run -p 8081:80 --name  gallery_with_media '
+            sh 'docker rm -f gallery_with_media || true'
+            sh 'docker run -d -p 8081:80 --name gallery_with_media gallery_with_media'
         }
     }
   }
