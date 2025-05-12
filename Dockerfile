@@ -1,7 +1,9 @@
 FROM nginx:alpine
 
-# Copy files to workspase
-COPY . /usr/share/nginx/html
+#RUN rm -rf /usr/share/nginx/html/*
 
-#Port
+COPY . /usr/share/nginx/html/
+
 EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
